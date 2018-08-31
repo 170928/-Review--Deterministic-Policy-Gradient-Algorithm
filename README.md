@@ -47,4 +47,9 @@ Stochastic policy gradient와 Deterministic policy gradient에는 중요한 차�
 
 ## Backgroud 
 agent가 stochastic environment에서 축적되는 reward값을 최대로하기 위해 연속되는 time-step속에서 action을 선택하는 시나리오를 기반으로 합니다.  
-이 문제를 Markov Decision Process (MDP) 문제로써 볼 수 있습니다.  
+![image](https://user-images.githubusercontent.com/40893452/44899986-5dea1680-ad3e-11e8-8446-d35a6fea9172.png)  
+Agent의 목표는 시작 state로 부터 cumulative discounted reward를 최대화하는 policy를 획득하는 것입니다.  
+이때의 objective function은 다음과 같습니다.  
+![image](https://user-images.githubusercontent.com/40893452/44902065-f8992400-ad43-11e8-83f8-cc82d773e2cc.png)  
+
+
