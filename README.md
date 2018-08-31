@@ -81,7 +81,8 @@ critic은 action-value function ![image](https://user-images.githubusercontent.c
 이때, 몇가지 중요한 특징이 존재합니다.  
 ![image](https://user-images.githubusercontent.com/40893452/44919070-87736400-ad77-11e8-80bf-98598de1df81.png)  
 parameter "w"로 근사한 action-value function은 실제 action-value function과 달리 편향 (bias)가 생길 수 있습니다.  그러나, 위의 그림처럼, i) 와 ii) 의 특징을 만족시키는 parameter "w" 라면 편향이 없습니다.  
-> 증명은 Sutton 교수님의 책에...  
+> 증명은 Sutton 교수님의 책에...    
+
 그러므로, i)과 ii)의 특징이 만족된다면, 전체적인 알고리즘은 critic을 사용하지 않을때와 "동일"한 알고리즘이라고 볼 수 있습니다.  
 즉, 더 효과적인 학습이 가능하면서 기존의 강화학습과 같은 알고리즘이라는 것입니다.  
 
@@ -91,7 +92,7 @@ parameter "w"로 근사한 action-value function은 실제 action-value function
 > ![image](https://user-images.githubusercontent.com/40893452/44919551-bfc77200-ad78-11e8-9b3d-5f956b7f028e.png)  
 > ![image](https://user-images.githubusercontent.com/40893452/44919726-1df45500-ad79-11e8-98da-5d1d41f07bef.png)  
 
-
+## Off-Policy Actor-Critic
 
 
 
