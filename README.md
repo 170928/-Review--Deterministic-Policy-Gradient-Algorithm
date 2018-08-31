@@ -61,6 +61,42 @@ State 의 density 도 표현할 수 있으며, 다음과 같이 정의됩니다.
 이와 함께, performance objective function도 위와 같이 쓸 수 있게 됩니다.  
 
 ## Stochastic Policy Gradient Theorem
-.
+policy gradient 알고맂므은 continuous action reinforcement learning의 중요한 요소입니다.  
+기본적인 개념은 정책 (policy) 이끌어내는 function의 parameter를 performance objective function의 미분 값을 이용해서 학습하는 것입니다.  
+![image](https://user-images.githubusercontent.com/40893452/44918518-27c88900-ad76-11e8-8f9c-8c90932f60b7.png)  
+이때, stochastic environment이기 때문에 state distribution이 존재합니다.  
+state distribution은 정책 (policy)에 따라 변하게 되지만, policy gradient는 state distribution 정보에 의존하지 않습니다.  
+이 점은 Sutton 교수님의 책에서 증명되어있습니다. 
+그리고, 이 점이 계산 적인 측면에서의 강점을 제공해줍니다.  
+
+## Stochastic Actor Critic Algorithms
+actor-critic은 policy gradient theorem을 기반으로 가장 많이 쓰이는 구조입니다.  
+actor와 critic은 동일한 구조로 구성됩니다.  
+1. actor  
+actor는 "stochastic policy gradient theorem"에서 보여준 equation (2)의 gradient를 사용해서, "stochastic policy" ![image](https://user-images.githubusercontent.com/40893452/44918802-d8cf2380-ad76-11e8-9b37-426d75f57be1.png) 의 parameter를 학습합니다.  
+하지만, action-value function인 ![image](https://user-images.githubusercontent.com/40893452/44918860-f7cdb580-ad76-11e8-97f2-48744d192b91.png) 를 알지 못하므로, parameter "w"로 근사되는 ![image](https://user-images.githubusercontent.com/40893452/44918903-1469ed80-ad77-11e8-83e0-559db786fcdd.png) 를 업데이트에서 사용합니다.  
+2. critic  
+critic은 action-value function ![image](https://user-images.githubusercontent.com/40893452/44918903-1469ed80-ad77-11e8-83e0-559db786fcdd.png)를 학습합니다.  
+그 방법은, temporal-difference learning과 같은 policy evaluation 알고리즘을 활용하여 action-value function을 학습합니다.  
+이때, 몇가지 중요한 특징이 존재합니다.  
+![image](https://user-images.githubusercontent.com/40893452/44919070-87736400-ad77-11e8-80bf-98598de1df81.png)  
+parameter "w"로 근사한 action-value function은 실제 action-value function과 달리 편향 (bias)가 생길 수 있습니다.  그러나, 위의 그림처럼, i) 와 ii) 의 특징을 만족시키는 parameter "w" 라면 편향이 없습니다.  
+> 증명은 Sutton 교수님의 책에...  
+그러므로, i)과 ii)의 특징이 만족된다면, 전체적인 알고리즘은 critic을 사용하지 않을때와 "동일"한 알고리즘이라고 볼 수 있습니다.  
+즉, 더 효과적인 학습이 가능하면서 기존의 강화학습과 같은 알고리즘이라는 것입니다.  
+
+> 아래의 첨부내용들은 수식적 이해를 위해 넣은 자료입니다.  
+> From http://dsba.korea.ac.kr/wp/wp-content/seminar/Reinforcement%20Learning/RL_week7_Policy_Gradient_Method_%EB%AA%A8%EA%B2%BD%ED%98%84.pdf  
+> ![image](https://user-images.githubusercontent.com/40893452/44919516-aaeade80-ad78-11e8-8fe0-12fc11dabc1a.png)  
+> ![image](https://user-images.githubusercontent.com/40893452/44919551-bfc77200-ad78-11e8-9b3d-5f956b7f028e.png)  
+> ![image](https://user-images.githubusercontent.com/40893452/44919726-1df45500-ad79-11e8-98da-5d1d41f07bef.png)  
+
+
+
+
+
+
+
+
 
 
