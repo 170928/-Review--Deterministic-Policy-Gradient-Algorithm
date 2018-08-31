@@ -22,3 +22,8 @@ policy gradient에서 기본적인 개념은 아래와 같습니다.
 이 논문에서는, deterministic policy gradient 가 stochastic policy gradient의 policy variance가 0인 제한되는 경우임을 보여줍니다.  
 
 Stochastic policy gradient와 Deterministic policy gradient에는 중요한 차이가 존재합니다.  
+
+>https://www.quora.com/Whats-the-difference-between-deterministic-policy-gradient-and-stochastic-policy-gradient:  
+>In stochastic policy gradient, actions are drawn from a distribution parameterized by your policy. For example, your robot’s motor torque might be drawn from a Normal distribution with mean μμ and deviation σσ. Where your policy will predict μμ and σσ. When you draw from this distribution and evaluate your policy, you can move your mean closer to samples that led to higher reward and farther from samples that led to lower reward, and reduce your deviation as you become more confident.  
+>When you reduce the variance to 0, we get a policy that is deterministic. In deterministic policy gradient, we directly take the gradients of μμ.  
+>In the stochastic case, the policy gradient integrates over both state and action spaces, whereas in the deterministic case it only integrates over the state space. As a result, computing the stochastic policy gradient may require more samples, especially if the action space has many dimensions.
