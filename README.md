@@ -46,10 +46,17 @@ Stochastic policy gradient와 Deterministic policy gradient에는 중요한 차�
 그러므로, 미분 가능한 fuction approximator ( ex, DNN )을 사용하여 action-value function을 추정하고 "off-policyt actor-critic"알고리즘을 통해서 deterministic policy gradient 알고리즘을 이끌어 냅니다.  
 
 ## Backgroud 
+## Preliminaries
 agent가 stochastic environment에서 축적되는 reward값을 최대로하기 위해 연속되는 time-step속에서 action을 선택하는 시나리오를 기반으로 합니다.  
 ![image](https://user-images.githubusercontent.com/40893452/44899986-5dea1680-ad3e-11e8-8446-d35a6fea9172.png)  
 Agent의 목표는 시작 state로 부터 cumulative discounted reward를 최대화하는 policy를 획득하는 것입니다.  
 이때의 objective function은 다음과 같습니다.  
 ![image](https://user-images.githubusercontent.com/40893452/44902065-f8992400-ad43-11e8-83f8-cc82d773e2cc.png)  
+State 의 density 도 표현할 수 있으며, 다음과 같이 정의됩니다.  
+![image](https://user-images.githubusercontent.com/40893452/44902457-0602de00-ad45-11e8-9f35-3a5139cfae46.png)  
+이와 함께, performance objective function도 위와 같이 쓸 수 있게 됩니다.  
+
+## Stochastic Policy Gradient Theorem
+
 
 
