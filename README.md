@@ -93,6 +93,9 @@ parameter "w"로 근사한 action-value function은 실제 action-value function
 > ![image](https://user-images.githubusercontent.com/40893452/44919726-1df45500-ad79-11e8-98da-5d1d41f07bef.png)  
 
 ## Off-Policy Actor-Critic
+Learning문제에서 Exploration의 이슈는 피해갈 수 없습니다. Policy Gradient도 마찬가지라서 Q learning처럼 Off-Policy를 사용함으로서 그 문제를 해결할 수 있습니다.  
+![image](https://user-images.githubusercontent.com/40893452/44920365-b212ec00-ad7a-11e8-8f16-a3c72faecebe.png)  
+
 
 
 
