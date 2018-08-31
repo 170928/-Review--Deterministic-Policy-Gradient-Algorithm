@@ -1,9 +1,9 @@
 # -Review--Deterministic-Policy-Gradient-Algorithm
 -David Silver, Guy Lever, Nicholas Heess ... 
-# http://techtalks.tv/talks/deterministic-policy-gradient-algorithms/61098/
-# https://reinforcement-learning-kr.github.io/2018/06/27/2_dpg/
-# https://whikwon.github.io/articles/2017-12/RL_Lecture7
-# http://www.modulabs.co.kr/RL_library/3305
+> http://techtalks.tv/talks/deterministic-policy-gradient-algorithms/61098/
+> https://reinforcement-learning-kr.github.io/2018/06/27/2_dpg/
+> https://whikwon.github.io/articles/2017-12/RL_Lecture7
+> http://www.modulabs.co.kr/RL_library/3305
 
 ## Abstact
 이 논문에서는 continuous action 을 위한 "deterministic policy gradient" algorithm을 소개합니다.  
