@@ -21,3 +21,4 @@ policy gradient에서 기본적인 개념은 아래와 같습니다.
 제안되는 알고리즘은 model-free 하며 action-value function의 gradient 를 통해서 deterministic policy gradient 를 표현할 수 있습니다.  
 이 논문에서는, deterministic policy gradient 가 stochastic policy gradient의 policy variance가 0인 제한되는 경우임을 보여줍니다.  
 
+Stochastic policy gradient와 Deterministic policy gradient에는 중요한 차이가 존재합니다.  
