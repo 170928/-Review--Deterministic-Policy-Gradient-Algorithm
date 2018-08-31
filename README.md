@@ -61,6 +61,6 @@ State 의 density 도 표현할 수 있으며, 다음과 같이 정의됩니다.
 이와 함께, performance objective function도 위와 같이 쓸 수 있게 됩니다.  
 
 ## Stochastic Policy Gradient Theorem
-
+.
 
 
