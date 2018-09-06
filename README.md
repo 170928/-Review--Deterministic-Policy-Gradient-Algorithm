@@ -97,6 +97,10 @@ Learning문제에서 Exploration의 이슈는 피해갈 수 없습니다. Policy
 ![image](https://user-images.githubusercontent.com/40893452/44920365-b212ec00-ad7a-11e8-8f16-a3c72faecebe.png)  
 
 
+## Policy Gradient 코드 트레이닝 
+
+![result](https://user-images.githubusercontent.com/40893452/45149980-c84efb00-b205-11e8-925c-0fef1395dbee.gif)
+
 ## Policy Gradient 코드 구현 학습 결과
 
 ![result](https://user-images.githubusercontent.com/40893452/45159765-a44de280-b222-11e8-8fa6-205cdd0bfa0e.gif)
