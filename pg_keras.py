@@ -16,7 +16,7 @@ BATCH_SIZE = 32
 class REINFORCEMENT:
     def __init__(self, state_dim, action_dim):
         np.random.seed(1)
-        self.action_space = [0,1,2,3,4]
+        self.action_space = [0,1,2,3]
 
         #
         self.s, self.a, self.r = [], [], []
@@ -31,10 +31,10 @@ class REINFORCEMENT:
         self.state_dim = state_dim
 
         self.discount_factor = 0.99
-        self.learning_rate = 0.001
+        self.learning_rate = 0.0025
 
         # 선택된 action의 idx 만 1 인 tensor를 받아옵니다.
-        self.actions = tf.placeholder(tf.float32, shape=[None,self.action_dim])
+        self.actions = tf.placeholder(tf.float32, shape=[None, self.action_dim])
 
         # discount 된 reward 를 가져옵니다.
         # REINFORCEMENT 알고리즘은 몬테 카를로 (MC) 알고리즘이므로
@@ -46,13 +46,14 @@ class REINFORCEMENT:
         self.params = tf.trainable_variables()
 
         self.action_prob = tf.reduce_sum(self.actions * self.outputs, axis = 1)
-        self.cross_loss =  tf.log(self.action_prob) * self.discounted_reward
-        self.loss = -tf.reduce_sum(self.cross_loss)
+        self.pre_loss = tf.log(self.action_prob) * self.discounted_reward
+        self.loss = -tf.reduce_sum(self.pre_loss)
+        self.optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(self.loss)
 
         # discounted_reward는 policy의 parameter와 무관하므로, loss 에 대해 parameter 측면으로 미분을 해도 무관한다.
-        self.gradients = tf.gradients(self.loss, self.params)
-        self.grads_and_vars = list(zip(self.gradients, self.params))
-        self.optimizer = tf.train.AdamOptimizer(self.learning_rate).apply_gradients(self.grads_and_vars)
+        #self.gradients = tf.gradients(self.loss, self.params)
+        #self.grads_and_vars = list(zip(self.gradients, self.params))
+        #self.optimizer = tf.train.AdamOptimizer(self.learning_rate).apply_gradients(self.grads_and_vars)
 
     def get_action(self, sess, state):
         return sess.run(self.outputs, feed_dict = {self.inputs : state})
@@ -78,8 +79,11 @@ class REINFORCEMENT:
         disc_reward = np.float32(self.discount_rewards(self.r))
         disc_reward -= np.mean(disc_reward)
         disc_reward /= np.std(disc_reward)
+        #disc_reward = np.sum(disc_reward)
+        #print(disc_reward)
 
         sess.run(self.optimizer, feed_dict = {self.discounted_reward : disc_reward, self.inputs : self.s, self.actions : self.a})
+
 
         self.s, self.a, self.r = [], [], []
 
@@ -92,7 +96,6 @@ class REINFORCEMENT:
             b2 = bias_var('b2')
             w3 = weight_var([24,self.action_dim], 'w3')
             b3 = bias_var('b3')
-
 
             self.inputs = tf.placeholder(tf.float32, shape=[None, self.state_dim])
 
@@ -133,7 +136,7 @@ if __name__=="__main__":
 
         agent = REINFORCEMENT(state_dim, action_dim)
 
-        SAVER_DIR = "./save/non_tfgradient"
+        SAVER_DIR = "./save/"
         saver = tf.train.Saver()
         checkpoint_path = os.path.join(SAVER_DIR, "model")
         ckpt = tf.train.get_checkpoint_state(SAVER_DIR)
@@ -148,7 +151,7 @@ if __name__=="__main__":
         global_step = 0
         scores, episodes = [], []
 
-        for e in range(2500):
+        for e in range(10000):
 
             done = False
             score = 0
@@ -158,15 +161,14 @@ if __name__=="__main__":
             state = np.reshape(state, [1,15])
 
             while not done:
-
                 env.render()
 
                 global_step+=1
 
                 prob = agent.get_action(sess, state)[0]
-                print(prob)
-                if e < 1000:
-                    action = np.random.choice(action_dim, 1 , p = prob)
+                #print(prob)
+                if e < 0:
+                    action = np.random.choice(action_dim, 1, p = prob)
                     #print(action)
                 else:
                     action = np.argmax(prob)
