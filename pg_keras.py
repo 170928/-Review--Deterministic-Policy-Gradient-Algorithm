@@ -49,10 +49,10 @@ class REINFORCEMENT:
         self.cross_loss =  tf.log(self.action_prob) * self.discounted_reward
         self.loss = -tf.reduce_sum(self.cross_loss)
 
-        #self.gradients = tf.gradients(self.loss, self.params)
-        #self.grads_and_vars = list(zip(self.gradients, self.params))
-        #self.optimizer = tf.train.AdamOptimizer(self.learning_rate).apply_gradients(self.grads_and_vars)
-        self.optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(self.loss)
+        # discounted_reward는 policy의 parameter와 무관하므로, loss 에 대해 parameter 측면으로 미분을 해도 무관한다.
+        self.gradients = tf.gradients(self.loss, self.params)
+        self.grads_and_vars = list(zip(self.gradients, self.params))
+        self.optimizer = tf.train.AdamOptimizer(self.learning_rate).apply_gradients(self.grads_and_vars)
 
     def get_action(self, sess, state):
         return sess.run(self.outputs, feed_dict = {self.inputs : state})
@@ -164,8 +164,10 @@ if __name__=="__main__":
                 global_step+=1
 
                 prob = agent.get_action(sess, state)[0]
-                if e < 2000:
+                print(prob)
+                if e < 1000:
                     action = np.random.choice(action_dim, 1 , p = prob)
+                    #print(action)
                 else:
                     action = np.argmax(prob)
 
