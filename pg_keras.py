@@ -2,6 +2,7 @@
 # 이웅원, 양혁렬, 김건우, 이영무, 이의령 님의 "파이썬과 케라스로 배우는 강화학습" 의 Keras 코드를 참조하였습니다.
 # 감사합니다.
 
+import os
 import numpy as np
 from environment import Env
 import tensorflow as tf
@@ -48,9 +49,10 @@ class REINFORCEMENT:
         self.cross_loss =  tf.log(self.action_prob) * self.discounted_reward
         self.loss = -tf.reduce_sum(self.cross_loss)
 
-        self.gradients = tf.gradients(self.loss, self.params)
-        self.grads_and_vars = list(zip(self.gradients, self.params))
-        self.optimizer = tf.train.AdamOptimizer(self.learning_rate).apply_gradients(self.grads_and_vars)
+        #self.gradients = tf.gradients(self.loss, self.params)
+        #self.grads_and_vars = list(zip(self.gradients, self.params))
+        #self.optimizer = tf.train.AdamOptimizer(self.learning_rate).apply_gradients(self.grads_and_vars)
+        self.optimizer = tf.train.AdamOptimizer(self.learning_rate).minimize(self.loss)
 
     def get_action(self, sess, state):
         return sess.run(self.outputs, feed_dict = {self.inputs : state})
@@ -128,8 +130,20 @@ if __name__=="__main__":
 
     with tf.Session() as sess:
 
+
         agent = REINFORCEMENT(state_dim, action_dim)
-        sess.run(tf.global_variables_initializer())
+
+        SAVER_DIR = "./save/non_tfgradient"
+        saver = tf.train.Saver()
+        checkpoint_path = os.path.join(SAVER_DIR, "model")
+        ckpt = tf.train.get_checkpoint_state(SAVER_DIR)
+
+        if ckpt and ckpt.model_checkpoint_path:
+            print("[Restore Model]")
+            saver.restore(sess, ckpt.model_checkpoint_path)
+        else:
+            print("[Initialzie Model]")
+            sess.run(tf.global_variables_initializer())
 
         global_step = 0
         scores, episodes = [], []
@@ -138,6 +152,7 @@ if __name__=="__main__":
 
             done = False
             score = 0
+            global_step = 0
 
             state = env.reset()
             state = np.reshape(state, [1,15])
@@ -149,7 +164,10 @@ if __name__=="__main__":
                 global_step+=1
 
                 prob = agent.get_action(sess, state)[0]
-                action = np.random.choice(action_dim, 1 , p = prob)
+                if e < 2000:
+                    action = np.random.choice(action_dim, 1 , p = prob)
+                else:
+                    action = np.argmax(prob)
 
                 next_state, reward, done = env.step(action)
                 next_state = np.reshape(next_state, [1,15])
@@ -167,3 +185,5 @@ if __name__=="__main__":
                     episodes.append(e)
                     score = round(score)
                     print("episode:", e, "  score:", score, "   time_step:", global_step )
+
+                    saver.save(sess, checkpoint_path)
